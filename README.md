@@ -42,4 +42,9 @@
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/BocalettoLuca/bingo-web-game.git
+   git clone https://github.com/bocaletto-luca/Bingo.git
+
+2. Open index.html in web server example Apache2
+
+### Official Website: https://bocalettoluca.altervista.org
+### Official Github Site: https://bocaletto-luca.github.io
