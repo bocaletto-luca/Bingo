@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bingo Web Game - Tombola 90 Definitivo</title>
+  <title>Slot Machine Web Game</title>
   <style>
-    /* Stili globali e tema scuro */
+    /* Global Styles & Dark Theme */
     body {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #121212;
       color: #e0e0e0;
       display: flex;
@@ -21,481 +21,345 @@
       padding: 10px 20px;
       text-align: center;
     }
+    header {
+      position: relative;
+    }
     header h1 {
       margin: 0;
       font-size: 2rem;
     }
+    /* Help button in header */
+    .help-button {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      background-color: #007BFF;
+      border: none;
+      color: #fff;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .help-button:hover {
+      background-color: #0056b3;
+    }
     .container {
       flex: 1;
-      max-width: 1200px;
+      max-width: 800px;
       margin: 20px auto;
       padding: 20px;
-    }
-    .section {
-      margin-bottom: 20px;
       text-align: center;
     }
-    .hidden {
-      display: none;
+    .display {
+      margin-bottom: 20px;
     }
-    input, select, button {
-      padding: 8px 12px;
-      margin: 5px;
+    .credits, .bet {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    input[type="number"] {
+      width: 80px;
+      padding: 5px;
       font-size: 1rem;
+      text-align: center;
     }
+    /* Slot Machine Layout */
+    .slot-machine {
+      background: #222;
+      border: 2px solid #444;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .reels {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .reel {
+      width: 80px;
+      height: 80px;
+      background: #1e1e1e;
+      border: 2px solid #333;
+      border-radius: 10px;
+      font-size: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Button Styles */
     button {
       background-color: #007BFF;
       border: none;
       color: #fff;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
     button:hover {
       background-color: #0056b3;
     }
-    /* Cards container */
-    #cardsContainer {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .cardBox {
-      border: 1px solid #444;
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      padding: 10px;
-      width: 240px;
-      overflow: hidden;
-    }
-    .cardBox h3 {
-      margin: 5px 0;
+    /* Message */
+    #message {
+      margin-top: 15px;
       font-size: 1.2rem;
+      min-height: 1.2em;
+    }
+    /* Winning Combinations Table */
+    #winCombinations {
+      margin-top: 30px;
       text-align: center;
     }
-    .bingoCard {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      gap: 3px;
-    }
-    .bingoCard div {
-      border: 1px solid #333;
-      padding: 6px;
-      text-align: center;
-      background-color: #1e1e1e;
-      min-height: 35px;
-      font-size: 0.9rem;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .marked {
-      background-color: #28a745 !important;
-      color: #fff;
-      font-weight: bold;
-    }
-    /* Draw area: posizionato sotto le tessere */
-    #drawArea {
-      margin-top: 20px;
-    }
-    #drawArea button {
-      margin-bottom: 10px;
-    }
-    #drawnNumbers {
-      text-align: center;
-    }
-    #drawnNumbers span {
-      display: inline-block;
-      margin: 2px;
-      padding: 6px;
-      border: 1px solid #444;
-      width: 30px;
-      text-align: center;
-      background-color: #333;
-    }
-    /* Scoreboard: il tabellone vincite */
-    #scoreboardSection {
-      margin-top: 20px;
-      text-align: center;
-    }
-    #winTable {
+    #winCombinations table {
       margin: 0 auto;
       border-collapse: collapse;
-      width: 80%;
-      max-width: 500px;
+      width: 90%;
+      max-width: 600px;
     }
-    #winTable th, #winTable td {
+    #winCombinations th, #winCombinations td {
       border: 1px solid #444;
-      padding: 8px;
+      padding: 10px;
       text-align: center;
     }
-    #winTable th {
+    #winCombinations th {
       background-color: #1f1f1f;
+      font-size: 1rem;
+    }
+    #winCombinations td {
+      font-size: 0.9rem;
+    }
+    /* Help Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      background-color: #2a2a2a;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      text-align: left;
+      color: #e0e0e0;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover, .close:focus {
+      color: #fff;
+      text-decoration: none;
+    }
+    footer {
+      font-size: 0.9rem;
     }
     /* Responsive */
     @media (max-width: 600px) {
-      .cardBox { width: 100%; }
+      .reels {
+        gap: 10px;
+      }
+      .reel {
+        width: 60px;
+        height: 60px;
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Bingo Web Game - Tombola 90 Definitivo</h1>
+    <h1>Slot Machine</h1>
+    <button class="help-button" id="helpBtn">Help</button>
   </header>
-  
+
   <div class="container">
-    <!-- Lobby: Selezione del numero di giocatori -->
-    <section id="lobby" class="section">
-      <h2>Lobby</h2>
-      <p>Seleziona il numero di giocatori (1-8):</p>
-      <select id="numPlayers">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-      </select>
-      <br>
-      <button id="startGameBtn">Avvia Gioco</button>
-    </section>
-    
-    <!-- Sezione di Gioco -->
-    <section id="game" class="section hidden">
-      <div id="cardsContainer"></div>
-      <div id="drawArea">
-        <button id="drawBtn">Estrai Numero</button>
-        <div id="drawnNumbers">
-          <h3>Numeri Estratti:</h3>
-          <div id="numberList"></div>
-        </div>
+    <div class="display">
+      <div class="credits">Credits: <span id="credits">1000</span></div>
+      <div class="bet">Bet: <input type="number" id="betInput" value="100" min="1" max="1000"></div>
+    </div>
+    <div class="slot-machine">
+      <div class="reels">
+        <div class="reel" id="reel1">?</div>
+        <div class="reel" id="reel2">?</div>
+        <div class="reel" id="reel3">?</div>
       </div>
-      <div id="scoreboardSection">
-        <h3>Tabellone Vincite</h3>
-        <table id="winTable">
-          <thead>
-            <tr>
-              <th>Vincita</th>
-              <th>Premio</th>
-              <th>Vincitore(i)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Ambo</td>
-              <td>100€</td>
-              <td id="win-ambo"></td>
-            </tr>
-            <tr>
-              <td>Terno</td>
-              <td>500€</td>
-              <td id="win-terno"></td>
-            </tr>
-            <tr>
-              <td>Quaterna</td>
-              <td>2000€</td>
-              <td id="win-quaterna"></td>
-            </tr>
-            <tr>
-              <td>Cinquina</td>
-              <td>10000€</td>
-              <td id="win-cinquina"></td>
-            </tr>
-            <tr>
-              <td>Tombola</td>
-              <td>50000€</td>
-              <td id="win-tombola"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-    
-    <!-- Sezione Risultato -->
-    <section id="result" class="section hidden">
-      <h2>Gioco Terminato</h2>
-      <p id="resultMessage"></p>
-      <button id="restartBtn">Ricomincia Gioco</button>
-    </section>
+    </div>
+    <button id="spinButton">Spin</button>
+    <div id="message"></div>
+    <!-- Winning Combinations Table -->
+    <div id="winCombinations">
+      <h2>Winning Combinations</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Combination</th>
+            <th>Payout</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Three identical symbols</td>
+            <td>Bet × 10</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  
+
   <footer>
-    &copy; 2025 Bocaletto Luca. Tutti i diritti riservati.
+    © 2025 Bocaletto Luca
   </footer>
-  
-  <!-- Audio -->
-  <audio id="audioDraw" src="audio/draw.mp3"></audio>
-  <audio id="audioWin" src="audio/win.mp3"></audio>
-  
+
+  <!-- Help Modal -->
+  <div id="helpModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeHelp">&times;</span>
+      <h2>How to Play</h2>
+      <p>
+        1. Adjust your bet using the input field and click "Spin".<br>
+        2. The reels will spin and then stop sequentially, revealing the final symbols.<br>
+        3. If all three symbols match, you win your bet multiplied by 10.<br>
+        4. Your credits will be updated accordingly. Enjoy the game and have fun!
+      </p>
+    </div>
+  </div>
+
+  <!-- Audio Elements -->
+  <audio id="spinSound" src="audio/spin.mp3"></audio>
+  <audio id="winSound" src="audio/win.mp3"></audio>
+
   <script>
-    /******** Variabili Globali ********/
-    let numPlayers = 0;
-    let cards = []; // Array di tessere, ogni tessera è una matrice 3x9
-    let drawnNumbers = [];
-    // Registrazione delle vincite per ogni categoria
-    let winners = { "ambo": [], "terno": [], "quaterna": [], "cinquina": [], "tombola": [] };
-    // Per ogni tessera, per ogni riga, tiene il livello di vincita già assegnato (0: nessuno, 2: ambo, 3: terno, 4: quaterna, 5: cinquina)
-    let rowWins = [];
-    // Per ogni tessera, se la tombola è già stato assegnata
-    let tombolaAwarded = [];
-    // Registrazione dell’estrazione in cui la vincita è stata assegnata (per gestire vittorie simultanee)
-    let firstWinDraw = { "ambo": undefined, "terno": undefined, "quaterna": undefined, "cinquina": undefined, "tombola": undefined };
-    
-    // Valori premio (fissi)
-    const prizeValues = {
-      "ambo": "100€",
-      "terno": "500€",
-      "quaterna": "2000€",
-      "cinquina": "10000€",
-      "tombola": "50000€"
-    };
-    
-    /******** Elementi DOM ********/
-    const lobbySection = document.getElementById("lobby");
-    const gameSection = document.getElementById("game");
-    const resultSection = document.getElementById("result");
-    const startGameBtn = document.getElementById("startGameBtn");
-    const numPlayersSelect = document.getElementById("numPlayers");
-    const cardsContainer = document.getElementById("cardsContainer");
-    const drawBtn = document.getElementById("drawBtn");
-    const numberList = document.getElementById("numberList");
-    // Celle del tabellone vincite
-    const winAmboCell = document.getElementById("win-ambo");
-    const winTernoCell = document.getElementById("win-terno");
-    const winQuaternaCell = document.getElementById("win-quaterna");
-    const winCinquinaCell = document.getElementById("win-cinquina");
-    const winTombolaCell = document.getElementById("win-tombola");
-    const resultMessage = document.getElementById("resultMessage");
-    const restartBtn = document.getElementById("restartBtn");
-    
-    const audioDraw = document.getElementById("audioDraw");
-    const audioWin = document.getElementById("audioWin");
-    
-    /******** Event Listeners ********/
-    startGameBtn.addEventListener("click", () => {
-      numPlayers = parseInt(numPlayersSelect.value);
-      cards = [];
-      drawnNumbers = [];
-      winners = { "ambo": [], "terno": [], "quaterna": [], "cinquina": [], "tombola": [] };
-      rowWins = [];
-      tombolaAwarded = [];
-      firstWinDraw = { "ambo": undefined, "terno": undefined, "quaterna": undefined, "cinquina": undefined, "tombola": undefined };
-      updateDrawnNumbersUI();
-      updateScoreboard();
-      // Genera tessera per ogni giocatore e inizializza i controlli
-      for (let i = 0; i < numPlayers; i++) {
-        cards.push(generateCard());
-        rowWins.push([0, 0, 0]); // per 3 righe
-        tombolaAwarded.push(false);
+    /******** Global Variables ********/
+    const symbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '7️⃣'];
+    let credits = 1000;
+    const reelElements = [
+      document.getElementById('reel1'),
+      document.getElementById('reel2'),
+      document.getElementById('reel3')
+    ];
+    const creditsDisplay = document.getElementById('credits');
+    const betInput = document.getElementById('betInput');
+    const spinButton = document.getElementById('spinButton');
+    const messageDiv = document.getElementById('message');
+    const spinSound = document.getElementById('spinSound');
+    const winSound = document.getElementById('winSound');
+
+    // Modal elements
+    const helpBtn = document.getElementById('helpBtn');
+    const helpModal = document.getElementById('helpModal');
+    const closeHelp = document.getElementById('closeHelp');
+
+    let spinningIntervals = [];
+    let finalSymbols = [];
+
+    /******** Functions ********/
+    function updateCreditsDisplay() {
+      creditsDisplay.textContent = credits;
+    }
+
+    function playSound(audioElement) {
+      audioElement.currentTime = 0;
+      audioElement.play().catch(err => console.log("Audio error:", err));
+    }
+
+    function startSpinning() {
+      reelElements.forEach((reel, index) => {
+        spinningIntervals[index] = setInterval(() => {
+          reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        }, 100);
+      });
+    }
+
+    function stopSpinning() {
+      return new Promise(resolve => {
+        finalSymbols = [];
+        spinningIntervals.forEach((interval, index) => {
+          setTimeout(() => {
+            clearInterval(spinningIntervals[index]);
+            const finalSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            reelElements[index].textContent = finalSymbol;
+            finalSymbols[index] = finalSymbol;
+            if (index === spinningIntervals.length - 1) {
+              resolve(finalSymbols);
+            }
+          }, 1500 + index * 500);
+        });
+      });
+    }
+
+    function checkWin(finalSymbols, bet) {
+      if (finalSymbols.every(symbol => symbol === finalSymbols[0])) {
+        return bet * 10;
       }
-      renderCards();
-      lobbySection.classList.add("hidden");
-      gameSection.classList.remove("hidden");
-    });
-    
-    drawBtn.addEventListener("click", () => {
-      if (drawnNumbers.length >= 90) {
-        alert("Tutti i numeri sono stati estratti!");
+      return 0;
+    }
+
+    function showMessage(text) {
+      messageDiv.textContent = text;
+    }
+
+    spinButton.addEventListener("click", async () => {
+      let bet = parseInt(betInput.value);
+      if (isNaN(bet) || bet <= 0) {
+        showMessage("Enter a valid bet amount.");
         return;
       }
-      let num;
-      do {
-        num = Math.floor(Math.random() * 90) + 1;
-      } while (drawnNumbers.includes(num));
-      drawnNumbers.push(num);
-      playAudioDraw();
-      updateDrawnNumbersUI();
-      markCards();
-      checkWinConditions();
+      if (bet > credits) {
+        showMessage("Insufficient credits!");
+        return;
+      }
+      credits -= bet;
+      updateCreditsDisplay();
+      showMessage("");
+      playSound(spinSound);
+      startSpinning();
+      spinButton.disabled = true;
+      const finalSymbols = await stopSpinning();
+      const winAmount = checkWin(finalSymbols, bet);
+      if (winAmount > 0) {
+        playSound(winSound);
+        credits += winAmount;
+        updateCreditsDisplay();
+        showMessage(`Congratulations! You won ${winAmount} credits!`);
+      } else {
+        showMessage("Better luck next time!");
+      }
+      spinButton.disabled = false;
     });
-    
-    restartBtn.addEventListener("click", () => {
-      location.reload();
+
+    updateCreditsDisplay();
+
+    /******** Modal Help Logic ********/
+    helpBtn.addEventListener("click", () => {
+      helpModal.style.display = "block";
     });
-    
-    /******** Funzioni ********/
-    
-    // Genera una tessera Bingo (3x9, 15 numeri) secondo il formato tradizionale
-    function generateCard() {
-      // Distribuisci almeno 1 numero per ogni colonna e i restanti 6 numeri (max 3 per colonna)
-      let colCounts = Array(9).fill(1);
-      let remaining = 15 - 9;
-      while (remaining > 0) {
-        const col = Math.floor(Math.random() * 9);
-        if (colCounts[col] < 3) {
-          colCounts[col]++;
-          remaining--;
-        }
+    closeHelp.addEventListener("click", () => {
+      helpModal.style.display = "none";
+    });
+    window.addEventListener("click", (event) => {
+      if (event.target == helpModal) {
+        helpModal.style.display = "none";
       }
-      // Genera i numeri per ciascuna colonna:
-      // Colonna 0: 1-9, Colonna 1: 10-19, …, Colonna 8: 80-90
-      let columns = [];
-      for (let col = 0; col < 9; col++) {
-        const minVal = (col === 0) ? 1 : col * 10;
-        const maxVal = (col === 8) ? 90 : col * 10 + 9;
-        let nums = [];
-        for (let n = minVal; n <= maxVal; n++) {
-          nums.push(n);
-        }
-        nums.sort(() => Math.random() - 0.5);
-        columns[col] = nums.slice(0, colCounts[col]).sort((a, b) => a - b);
-      }
-      // Crea la matrice 3x9 vuota e distribuisci i numeri in righe differenti per colonna
-      let card = Array.from({ length: 3 }, () => Array(9).fill(""));
-      for (let col = 0; col < 9; col++) {
-        let nums = columns[col];
-        let availableRows = [0, 1, 2];
-        for (let i = 0; i < nums.length; i++) {
-          let validRows = availableRows.filter(r => countNumbersInRow(card[r]) < 5);
-          if (validRows.length === 0) validRows = availableRows;
-          let chosenRow = validRows[Math.floor(Math.random() * validRows.length)];
-          card[chosenRow][col] = nums[i];
-          availableRows = availableRows.filter(r => r !== chosenRow);
-        }
-      }
-      return card;
-    }
-    
-    function countNumbersInRow(row) {
-      return row.filter(cell => cell !== "").length;
-    }
-    
-    // Visualizza le tessere di ogni giocatore
-    function renderCards() {
-      cardsContainer.innerHTML = "";
-      cards.forEach((card, index) => {
-        const cardBox = document.createElement("div");
-        cardBox.classList.add("cardBox");
-        const header = document.createElement("h3");
-        header.textContent = "Giocatore " + (index + 1);
-        cardBox.appendChild(header);
-        const grid = document.createElement("div");
-        grid.classList.add("bingoCard");
-        for (let row = 0; row < 3; row++) {
-          for (let col = 0; col < 9; col++) {
-            const cell = document.createElement("div");
-            cell.id = "card-" + index + "-" + row + "-" + col;
-            cell.textContent = card[row][col] !== "" ? card[row][col] : "";
-            grid.appendChild(cell);
-          }
-        }
-        cardBox.appendChild(grid);
-        cardsContainer.appendChild(cardBox);
-      });
-    }
-    
-    // Evidenzia i numeri estratti sulle tessere
-    function markCards() {
-      cards.forEach((card, cardIndex) => {
-        for (let row = 0; row < 3; row++) {
-          for (let col = 0; col < 9; col++) {
-            const value = card[row][col];
-            const cell = document.getElementById("card-" + cardIndex + "-" + row + "-" + col);
-            if (value !== "" && drawnNumbers.includes(value)) {
-              cell.classList.add("marked");
-            }
-          }
-        }
-      });
-    }
-    
-    // Controlla le condizioni di vincita per ogni tessera
-    function checkWinConditions() {
-      let currentDraw = drawnNumbers.length;
-      cards.forEach((card, cardIndex) => {
-        // Controllo per ogni riga (ambo, terno, quaterna, cinquina)
-        for (let row = 0; row < 3; row++) {
-          const markedCount = card[row].filter(cell => cell !== "" && drawnNumbers.includes(cell)).length;
-          // Ambo: almeno 2 numeri marcati
-          if (markedCount >= 2 && rowWins[cardIndex][row] < 2) {
-            if (firstWinDraw["ambo"] === undefined || firstWinDraw["ambo"] === currentDraw) {
-              rowWins[cardIndex][row] = 2;
-              if (firstWinDraw["ambo"] === undefined) firstWinDraw["ambo"] = currentDraw;
-              winners["ambo"].push("Giocatore " + (cardIndex + 1) + " (Riga " + (row + 1) + ")");
-              playAudioWin();
-              alert("Ambo vinto da Giocatore " + (cardIndex + 1) + " - Riga " + (row + 1) + " - Premio: " + prizeValues["ambo"]);
-            }
-          }
-          // Terno: almeno 3 numeri marcati
-          if (markedCount >= 3 && rowWins[cardIndex][row] < 3) {
-            if (firstWinDraw["terno"] === undefined || firstWinDraw["terno"] === currentDraw) {
-              rowWins[cardIndex][row] = 3;
-              if (firstWinDraw["terno"] === undefined) firstWinDraw["terno"] = currentDraw;
-              winners["terno"].push("Giocatore " + (cardIndex + 1) + " (Riga " + (row + 1) + ")");
-              playAudioWin();
-              alert("Terno vinto da Giocatore " + (cardIndex + 1) + " - Riga " + (row + 1) + " - Premio: " + prizeValues["terno"]);
-            }
-          }
-          // Quaterna: almeno 4 numeri marcati
-          if (markedCount >= 4 && rowWins[cardIndex][row] < 4) {
-            if (firstWinDraw["quaterna"] === undefined || firstWinDraw["quaterna"] === currentDraw) {
-              rowWins[cardIndex][row] = 4;
-              if (firstWinDraw["quaterna"] === undefined) firstWinDraw["quaterna"] = currentDraw;
-              winners["quaterna"].push("Giocatore " + (cardIndex + 1) + " (Riga " + (row + 1) + ")");
-              playAudioWin();
-              alert("Quaterna vinta da Giocatore " + (cardIndex + 1) + " - Riga " + (row + 1) + " - Premio: " + prizeValues["quaterna"]);
-            }
-          }
-          // Cinquina: riga completa (5 numeri)
-          if (markedCount === 5 && rowWins[cardIndex][row] < 5) {
-            if (firstWinDraw["cinquina"] === undefined || firstWinDraw["cinquina"] === currentDraw) {
-              rowWins[cardIndex][row] = 5;
-              if (firstWinDraw["cinquina"] === undefined) firstWinDraw["cinquina"] = currentDraw;
-              winners["cinquina"].push("Giocatore " + (cardIndex + 1) + " (Riga " + (row + 1) + ")");
-              playAudioWin();
-              alert("Cinquina vinta da Giocatore " + (cardIndex + 1) + " - Riga " + (row + 1) + " - Premio: " + prizeValues["cinquina"]);
-            }
-          }
-        }
-        // Tombola: controllo sull'intera tessera (15 numeri)
-        let totalMarked = 0;
-        card.forEach(row => {
-          row.forEach(cell => {
-            if (cell !== "" && drawnNumbers.includes(cell)) totalMarked++;
-          });
-        });
-        if (totalMarked === 15 && !tombolaAwarded[cardIndex]) {
-          if (firstWinDraw["tombola"] === undefined || firstWinDraw["tombola"] === currentDraw) {
-            tombolaAwarded[cardIndex] = true;
-            if (firstWinDraw["tombola"] === undefined) firstWinDraw["tombola"] = currentDraw;
-            winners["tombola"].push("Giocatore " + (cardIndex + 1));
-            playAudioWin();
-            alert("Tombola vinta da Giocatore " + (cardIndex + 1) + " - Premio: " + prizeValues["tombola"]);
-          }
-        }
-      });
-      updateScoreboard();
-    }
-    
-    // Aggiorna la visualizzazione dei numeri estratti
-    function updateDrawnNumbersUI() {
-      numberList.innerHTML = "";
-      drawnNumbers.forEach(n => {
-        const span = document.createElement("span");
-        span.textContent = n;
-        numberList.appendChild(span);
-      });
-    }
-    
-    // Aggiorna il tabellone delle vincite (scoreboard)
-    function updateScoreboard() {
-      winAmboCell.textContent = winners["ambo"].join(" | ");
-      winTernoCell.textContent = winners["terno"].join(" | ");
-      winQuaternaCell.textContent = winners["quaterna"].join(" | ");
-      winCinquinaCell.textContent = winners["cinquina"].join(" | ");
-      winTombolaCell.textContent = winners["tombola"].join(" | ");
-    }
-    
-    // Funzioni di riproduzione audio
-    function playAudioDraw() {
-      audioDraw.currentTime = 0;
-      audioDraw.play().catch(err => console.log("Errore audio draw:", err));
-    }
-    function playAudioWin() {
-      audioWin.currentTime = 0;
-      audioWin.play().catch(err => console.log("Errore audio win:", err));
-    }
+    });
   </script>
 </body>
 </html>
