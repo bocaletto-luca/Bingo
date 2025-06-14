@@ -5,6 +5,8 @@
 [![Made with CSS3](https://img.shields.io/badge/Made%20with-CSS3-1572B6?logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
 [![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
+[![Test Online](https://img.shields.io/badge/Test%20Online-Click%20Here-brightgreen?style=for-the-badge)](https://bocaletto-luca.github.io/Bingo/)
+
 **Bingo Web Game** is a responsive multiplayer 90-ball tombola game in a sleek dark theme. Enjoy real-time number draws and dynamic prize tracking for Ambo (100€), Terno (500€), Quaterna (2000€), Cinquina (10000€), and Tombola (50000€). Developed by **Bocaletto Luca**.
 
 ---
