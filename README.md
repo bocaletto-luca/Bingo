@@ -50,3 +50,5 @@
 
 ### Official Website: https://bocalettoluca.altervista.org
 ### Official Github Site: https://bocaletto-luca.github.io
+
+#### License: GPLv3
